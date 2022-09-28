@@ -1,0 +1,46 @@
+CREATE TABLE sitcoms (id INTEGER PRIMARY KEY AUTOINCREMENT, show TEXT, seasons INTEGER );
+
+INSERT INTO sitcoms (show, seasons) VALUES ("Friends", "10");
+INSERT INTO sitcoms (show, seasons) VALUES ("How I Met Your Mother", "9");
+
+CREATE TABLE actors (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, show_name TEXT);
+
+INSERT INTO actors (name, show_name) VALUES ("Rachel Green", "Friends");
+INSERT INTO actors (name, show_name) VALUES ("Robyn Scherbatsky", "How I Met Your Mother");
+INSERT INTO actors (name, show_name) VALUES ("Monica Geller", "Friends");
+INSERT INTO actors (name, show_name) VALUES ("Phoebe Buffay", "Friends");
+INSERT INTO actors (name, show_name) VALUES ("Ross Geller", "Friends");
+INSERT INTO actors (name, show_name) VALUES ("Joey Tribbiani", "Friends");
+INSERT INTO actors (name, show_name) VALUES ("Chandler Bing", "Friends");
+INSERT INTO actors (name, show_name) VALUES ("Lily Aldrin", "How I Met Your Mother");
+INSERT INTO actors (name, show_name) VALUES ("Ted Mosby", "How I Met Your Mother");
+INSERT INTO actors (name, show_name) VALUES ("Marshall Eriksen", "How I Met Your Mother");
+INSERT INTO actors (name, show_name) VALUES ("Barney Stinson", "How I Met Your Mother");
+
+CREATE table relationships (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    actor1_id INTEGER,
+    actor2_id INTEGER);
+    
+INSERT INTO relationships (actor1_id, actor2_id) VALUES (1, 5);
+INSERT INTO relationships (actor1_id, actor2_id) VALUES (3, 7);
+INSERT INTO relationships (actor1_id, actor2_id) VALUES (1, 6);
+INSERT INTO relationships (actor1_id, actor2_id) VALUES (2, 9);
+INSERT INTO relationships (actor1_id, actor2_id) VALUES (2, 11);
+INSERT INTO relationships (actor1_id, actor2_id) VALUES (8, 10);
+
+SELECT * FROM sitcoms;
+SELECT * FROM actors;
+
+/*Which sitcom was each character in and how many seasons? In alphabetical order by first name.*/
+SELECT actors.name, sitcoms.show, sitcoms.seasons FROM actors
+    JOIN sitcoms
+    ON show_name = sitcoms.show
+    ORDER BY name;
+
+/*What relationships occurred in each sitcom?*/
+SELECT a.name AS female_relationship, b.name AS male_relationship FROM relationships
+    JOIN actors a
+    ON relationships.actor1_id = a.id
+    JOIN actors b
+    ON relationships.actor2_id = b.id;
